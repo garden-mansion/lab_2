@@ -48,6 +48,12 @@ const getAnimationType = (dataForm, defaultAnimationType) => {
 }
 
 export const runAnimation = (dataForm) => {
+  const alongTheWay = document.getElementById('along-the-way');
+
+  if (alongTheWay.checked) {
+    return;
+  }
+
 
   const cx = +dataForm.cx.value;
   const cy = +dataForm.cy.value;
