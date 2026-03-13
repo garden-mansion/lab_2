@@ -1,13 +1,6 @@
 import { drawSmile, clear } from './image.js';
-import { toggleAnimationSettings, animationOnId } from './animation.js'
-
-const getTransformAttribute = (name, ...values) => {
-  return `${name}(${values.join(', ')})`
-}
-
-const getTransformStyle = (...transformAttributes) => {
-  return transformAttributes.map(attribute => getTransformAttribute(attribute.name, ...attribute.values)).join(', ')
-}
+import { toggleAnimationSettings, runAnimation } from './animation.js';
+import { getTransformStyle } from './utils.js'
 
 const draw = (dataForm) => {
   const svg = d3.select("svg")
@@ -25,7 +18,6 @@ const draw = (dataForm) => {
   const angle = { name: 'rotate', values: [angleValue] };
 
   const transformStyle = getTransformStyle(translate, scale, angle);
-  console.log(transformStyle);
 
   pict.attr("transform", transformStyle)
 }
@@ -55,11 +47,12 @@ clearButton.addEventListener('click', () => {
   clear(d3.select('svg'));
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+const animationCheckbox = document.getElementById('animation-on');
+animationCheckbox.addEventListener('click', () => {
   toggleAnimationSettings();
 });
 
-const animationCheckbox = document.getElementById(animationOnId);
-animationCheckbox.addEventListener('click', () => {
-  toggleAnimationSettings();
+const animationButton = document.getElementById('animate-button');
+animationButton.addEventListener('click', () => {
+  runAnimation(dataForm)
 })

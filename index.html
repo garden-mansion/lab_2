@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="./css/styles.css">
   <script src="http://d3js.org/d3.v7.min.js"></script>
   <script src="js/image.js" type="module"></script>
-  <script src="js/main.js" type="module"></script>
   <script src="js/animation.js" type="module"></script>
+  <script src="js/utils.js" type="module" defer></script>
+  <script src="js/main.js" defer type="module"></script>
 </head>
 
 <body>
@@ -19,13 +20,13 @@
       <input type="number" id="cx" value="300" max="600" min="0">
 
       <label for="cx-to">x to: </label>
-      <input type="number" id="cx-to" value="300" max="600" min="0"><br>
+      <input type="number" id="cx-to" value="303" max="600" min="0"><br>
 
       <label for="cy">y: </label>
       <input type="number" id="cy" value="300" max="600" min="0">
 
       <label for="cy-to">y to: </label>
-      <input type="number" id="cy-to" value="300" max="600" min="0">
+      <input type="number" id="cy-to" value="304" max="600" min="0">
     </p>
 
     <p>Масштаб<br>
@@ -33,13 +34,13 @@
       <input type="number" id="scale-x" value="1" max="10" min="1">
 
       <label for="scale-x-to">x final: </label>
-      <input type="number" name="scale-x-to" id="scale-x-to" value="1" min="1" max="10"><br>
+      <input type="number" name="scale-x-to" id="scale-x-to" value="2" min="1" max="10"><br>
 
       <label for="scale-y">y: </label>
       <input type="number" id="scale-y" value="1" max="10" min="1">
 
       <label for="scale-y-to">y final: </label>
-      <input type="number" name="scale-y-to" id="scale-y-to" value="1" min="1" max="10"><br>
+      <input type="number" name="scale-y-to" id="scale-y-to" value="3" min="1" max="10"><br>
     </p>
 
     <p>Поворот<br>
@@ -47,17 +48,18 @@
       <input type="number" id="angle" value="0" max="360" min="0">
 
       <label for="angle-to">angle to: </label>
-      <input type="number" id="angle-to" value="0" max="360" min="0">
+      <input type="number" id="angle-to" value="4" max="360" min="0">
     </p>
 
     <p>
       <input type="button" id="draw-button" value="Нарисовать">
       <input type="button" id="clear-button" value="Очистить">
+      <input type="button" id="animate-button" value="Анимировать">
     </p>
 
     <p>
-      <label for="animation-on">Animation off</label>
-      <input type="checkbox" name="animation-on" id="animation-on" checked="false">
+      <label for="animation-on">Animation on</label>
+      <input type="checkbox" name="animation-on" id="animation-on" checked>
 
       <select name="animations-type" id="animations-type">
         <option value="linear">linear</option>
