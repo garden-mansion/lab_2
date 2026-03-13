@@ -1,5 +1,5 @@
 import { drawSmile, clear } from './image.js';
-import { toggleAnimationSettings, runAnimation } from './animation.js';
+import { toggleAnimationSettings, runAnimation, toggleAlongTheWay } from './animation.js';
 import { getTransformStyle } from './utils.js'
 
 const draw = (dataForm) => {
@@ -55,4 +55,13 @@ animationCheckbox.addEventListener('click', () => {
 const animationButton = document.getElementById('animate-button');
 animationButton.addEventListener('click', () => {
   runAnimation(dataForm)
+});
+
+const alongTheWayButton = document.getElementById('along-the-way');
+alongTheWayButton.addEventListener('click', () => {
+  toggleAlongTheWay();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  toggleAlongTheWay();
 })

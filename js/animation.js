@@ -86,3 +86,18 @@ export const runAnimation = (dataForm) => {
     .attr("transform", transformStyleTo);
 }
 
+export const toggleAlongTheWay = () => {
+  const alongTheWay = document.getElementById('along-the-way');
+  
+  const coordinatesInputs = document.getElementById('coordinates-wrapper');
+  const alongTheWayOptions = document.getElementById('along-the-way-options');
+
+  if (!alongTheWay.checked) {
+    coordinatesInputs.classList.remove('display_none');
+    alongTheWayOptions.classList.add('display_none');
+  } else {
+    coordinatesInputs.classList.add('display_none');
+    alongTheWayOptions.classList.remove('display_none');
+  }
+}
+
