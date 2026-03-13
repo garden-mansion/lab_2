@@ -1,4 +1,5 @@
 import { drawSmile, clear } from './image.js';
+import { toggleAnimationSettings, animationOnId } from './animation.js'
 
 const getTransformAttribute = (name, ...values) => {
   return `${name}(${values.join(', ')})`
@@ -52,4 +53,13 @@ drawButton.addEventListener('click', () => {
 const clearButton = document.getElementById('clear-button');
 clearButton.addEventListener('click', () => {
   clear(d3.select('svg'));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  toggleAnimationSettings();
+});
+
+const animationCheckbox = document.getElementById(animationOnId);
+animationCheckbox.addEventListener('click', () => {
+  toggleAnimationSettings();
 })

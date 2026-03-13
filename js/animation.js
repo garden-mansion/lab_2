@@ -1,9 +1,9 @@
-const animationOnId = 'animation-on';
+export const animationOnId = 'animation-on';
 const animationSelectId = 'animations-type';
 const hideClassName = 'display_none'
 
 
-const toggleAnimationSettings = () => {
+export const toggleAnimationSettings = () => {
   const animationOn = document.getElementById(animationOnId);
   
   const inputs = document.querySelectorAll('input');
@@ -26,12 +26,3 @@ const toggleAnimationSettings = () => {
     animationSelect.classList.remove(hideClassName);
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  toggleAnimationSettings();
-});
-
-const animationCheckbox = document.getElementById(animationOnId);
-animationCheckbox.addEventListener('click', () => {
-  toggleAnimationSettings();
-})
