@@ -110,11 +110,20 @@ export const toggleAlongTheWay = () => {
   const coordinatesInputs = document.getElementById('coordinates-wrapper');
   const alongTheWayOptions = document.getElementById('along-the-way-options');
 
+  const scaleWrapper = document.getElementById('scale-wrapper');
+  const angleWrapper = document.getElementById('angle-wrapper');
+
   if (!alongTheWay.checked) {
     coordinatesInputs.classList.remove('display_none');
+    scaleWrapper.classList.remove('display_none');
+    angleWrapper.classList.remove('display_none');
+
     alongTheWayOptions.classList.add('display_none');
   } else {
     coordinatesInputs.classList.add('display_none');
+    scaleWrapper.classList.add('display_none');
+    angleWrapper.classList.add('display_none');
+
     alongTheWayOptions.classList.remove('display_none');
   }
 }
