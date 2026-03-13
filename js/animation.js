@@ -32,6 +32,21 @@ export const toggleAnimationSettings = () => {
   }
 }
 
+const getAnimationType = (dataForm, defaultAnimationType) => {
+  const animationType = dataForm['animations-type'].value;
+
+  switch (animationType) {
+    case 'linear':
+      return d3.easeLinear;
+    case 'elastic':
+      return d3.easeElastic;
+    case 'bounce':
+      return d3.easeBounce;
+  }
+
+  return defaultAnimationType ?? d3.easeElastic;
+}
+
 export const runAnimation = (dataForm) => {
 
   const cx = +dataForm.cx.value;
@@ -60,12 +75,14 @@ export const runAnimation = (dataForm) => {
 
   const transformStyleTo = getTransformStyle(translateTo, scaleTo, angleTo);
 
+  const animationType = getAnimationType(dataForm)
+
 	const svg = d3.select("svg")
     let pict = drawSmile(svg);
     pict.attr("transform", transformStyle)
     .transition()
     .duration(6000)
-    .ease(d3.easeBounce)
+    .ease(animationType)
     .attr("transform", transformStyleTo);
 }
 
