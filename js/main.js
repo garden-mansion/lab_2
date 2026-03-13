@@ -23,19 +23,10 @@ const draw = (dataForm) => {
   const angleValue = +dataForm.angle.value;
   const angle = { name: 'rotate', values: [angleValue] };
 
-  const skewXValue = +dataForm['skew-x'].value;
-  const skewX = { name: 'skewX', values: [skewXValue] };
-
-  const skewYValue = +dataForm['skew-y'].value;
-  const skewY = { name: 'skewY', values: [skewYValue] };
-
-  const transformStyle = getTransformStyle(translate, scale, angle, skewX, skewY);
+  const transformStyle = getTransformStyle(translate, scale, angle);
   console.log(transformStyle);
 
   pict.attr("transform", transformStyle)
-
-  // pict.attr("transform", `translate(${dataForm.cx.value},
-  //                                     ${dataForm.cy.value})`);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
