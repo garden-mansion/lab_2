@@ -1,5 +1,6 @@
 import { getTransformStyle } from './utils.js'
-import { drawSmile } from './image.js'
+import { drawSmile } from './image.js';
+import { drawPath, translateAlong } from './path.js'
 
 export const animationOnId = 'animation-on';
 const animationSelectId = 'animations-type';
@@ -8,7 +9,7 @@ const hideClassName = 'display_none'
 
 export const toggleAnimationSettings = () => {
   const animationOn = document.getElementById('animation-on');
-  
+
   const inputs = document.querySelectorAll('input');
   const inputsTo = Array.from(inputs).filter(input => input.id.endsWith('-to'));
 
@@ -50,7 +51,20 @@ const getAnimationType = (dataForm, defaultAnimationType) => {
 export const runAnimation = (dataForm) => {
   const alongTheWay = document.getElementById('along-the-way');
 
+  const svg = d3.select("svg")
+  let pict = drawSmile(svg);
+
   if (alongTheWay.checked) {
+    const alongTheWayOptions = document.getElementById('along-the-way-options');
+    const alongTheWayValue = alongTheWayOptions.value;
+    const pathId = alongTheWayValue === 'way-g' ? 0 : 1
+
+    let path = drawPath(pathId);
+    pict.transition()
+      .ease(d3.easeLinear) // установить в зависимости от настроек формы
+      .duration(6000)
+      .attrTween('transform', translateAlong(path.node()));
+
     return;
   }
 
@@ -82,10 +96,8 @@ export const runAnimation = (dataForm) => {
   const transformStyleTo = getTransformStyle(translateTo, scaleTo, angleTo);
 
   const animationType = getAnimationType(dataForm)
-
-	const svg = d3.select("svg")
-    let pict = drawSmile(svg);
-    pict.attr("transform", transformStyle)
+  
+  pict.attr("transform", transformStyle)
     .transition()
     .duration(6000)
     .ease(animationType)
@@ -94,7 +106,7 @@ export const runAnimation = (dataForm) => {
 
 export const toggleAlongTheWay = () => {
   const alongTheWay = document.getElementById('along-the-way');
-  
+
   const coordinatesInputs = document.getElementById('coordinates-wrapper');
   const alongTheWayOptions = document.getElementById('along-the-way-options');
 
