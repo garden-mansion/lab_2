@@ -22,7 +22,7 @@ const draw = (dataForm) => {
   pict.attr("transform", transformStyle)
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+d3.select(document).on("DOMContentLoaded.init", function () {
   const width = 600;
   const height = 600;
   const svg = d3.select("svg")
@@ -36,32 +36,27 @@ document.addEventListener("DOMContentLoaded", function () {
   pict1.attr("transform", `translate(400, 400) scale(1.5, 1.5) rotate(180)`);
 });
 
-const dataForm = document.getElementById('setting');
-const drawButton = document.getElementById('draw-button');
-drawButton.addEventListener('click', () => {
+const dataForm = d3.select('#setting').node();
+d3.select('#draw-button').on('click', () => {
   draw(dataForm);
 });
 
-const clearButton = document.getElementById('clear-button');
-clearButton.addEventListener('click', () => {
+d3.select('#clear-button').on('click', () => {
   clear(d3.select('svg'));
 });
 
-const animationCheckbox = document.getElementById('animation-on');
-animationCheckbox.addEventListener('click', () => {
+d3.select('#animation-on').on('click', () => {
   toggleAnimationSettings();
 });
 
-const animationButton = document.getElementById('animate-button');
-animationButton.addEventListener('click', () => {
-  runAnimation(dataForm)
+d3.select('#animate-button').on('click', () => {
+  runAnimation(dataForm);
 });
 
-const alongTheWayButton = document.getElementById('along-the-way');
-alongTheWayButton.addEventListener('click', () => {
+d3.select('#along-the-way').on('click', () => {
   toggleAlongTheWay();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+d3.select(document).on('DOMContentLoaded.toggle', () => {
   toggleAlongTheWay();
-})
+});

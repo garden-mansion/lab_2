@@ -8,28 +8,32 @@ const hideClassName = 'display_none'
 
 
 export const toggleAnimationSettings = () => {
-  const animationOn = document.getElementById('animation-on');
+  const animationOn = d3.select('#animation-on').property('checked');
 
-  const inputs = document.querySelectorAll('input');
-  const inputsTo = Array.from(inputs).filter(input => input.id.endsWith('-to'));
+  const inputs = d3.selectAll('input')
+    .filter(function () {
+      return d3.select(this).attr('id') && d3.select(this).attr('id').endsWith('-to');
+    });
 
-  const labels = document.querySelectorAll('label');
-  const labelsTo = Array.from(labels).filter(label => label.htmlFor.endsWith('-to'));
+  const labels = d3.selectAll('label')
+    .filter(function () {
+      const forAttr = d3.select(this).attr('for');
+      return forAttr && forAttr.endsWith('-to');
+    });
 
-  const animationSelect = document.getElementById(animationSelectId);
+  const animationSelect = d3.select('#' + animationSelectId);
+  const animateButton = d3.select('#animate-button');
 
-  const animateButton = document.getElementById('animate-button');
-
-  if (!animationOn.checked) {
-    inputsTo.forEach(inputTo => inputTo.classList.add(hideClassName));
-    labelsTo.forEach(labelTo => labelTo.classList.add(hideClassName));
-    animationSelect.classList.add(hideClassName);
-    animateButton.classList.add(hideClassName);
+  if (!animationOn) {
+    inputs.classed(hideClassName, true);
+    labels.classed(hideClassName, true);
+    animationSelect.classed(hideClassName, true);
+    animateButton.classed(hideClassName, true);
   } else {
-    inputsTo.forEach(inputTo => inputTo.classList.remove(hideClassName));
-    labelsTo.forEach(labelTo => labelTo.classList.remove(hideClassName));
-    animationSelect.classList.remove(hideClassName);
-    animateButton.classList.remove(hideClassName)
+    inputs.classed(hideClassName, false);
+    labels.classed(hideClassName, false);
+    animationSelect.classed(hideClassName, false);
+    animateButton.classed(hideClassName, false);
   }
 }
 
@@ -49,54 +53,52 @@ const getAnimationType = (dataForm, defaultAnimationType) => {
 }
 
 export const runAnimation = (dataForm) => {
-  const alongTheWay = document.getElementById('along-the-way');
+  const alongTheWay = d3.select('#along-the-way').property('checked');
 
-  const svg = d3.select("svg")
+  const svg = d3.select("svg");
   let pict = drawSmile(svg);
 
-  if (alongTheWay.checked) {
-    const alongTheWayOptions = document.getElementById('along-the-way-options');
-    const alongTheWayValue = alongTheWayOptions.value;
-    const pathId = alongTheWayValue === 'way-g' ? 0 : 1
+  if (alongTheWay) {
+    const alongTheWayValue = d3.select('#along-the-way-options').property('value');
+    const pathId = alongTheWayValue === 'way-g' ? 0 : 1;
 
     let path = drawPath(pathId);
     pict.transition()
-      .ease(d3.easeLinear) // установить в зависимости от настроек формы
+      .ease(d3.easeLinear)
       .duration(6000)
       .attrTween('transform', translateAlong(path.node()));
 
     return;
   }
 
-
-  const cx = +dataForm.cx.value;
-  const cy = +dataForm.cy.value;
+  const cx = +d3.select('#cx').property('value');
+  const cy = +d3.select('#cy').property('value');
   const translate = { name: 'translate', values: [cx, cy] }
 
-  const scaleX = +dataForm['scale-x'].value;
-  const scaleY = +dataForm['scale-y'].value;
+  const scaleX = +d3.select('#scale-x').property('value');
+  const scaleY = +d3.select('#scale-y').property('value');
   const scale = { name: 'scale', values: [scaleX, scaleY] };
 
-  const angleValue = +dataForm.angle.value;
+  const angleValue = +d3.select('#angle').property('value');
   const angle = { name: 'rotate', values: [angleValue] };
 
   const transformStyle = getTransformStyle(translate, scale, angle);
 
-  const cxTo = +dataForm['cx-to'].value;
-  const cyTo = +dataForm['cy-to'].value;
+  const cxTo = +d3.select('#cx-to').property('value');
+  const cyTo = +d3.select('#cy-to').property('value');
   const translateTo = { name: 'translate', values: [cxTo, cyTo] }
 
-  const scaleXTo = +dataForm['scale-x-to'].value;
-  const scaleYTo = +dataForm['scale-y-to'].value;
+  const scaleXTo = +d3.select('#scale-x-to').property('value');
+  const scaleYTo = +d3.select('#scale-y-to').property('value');
   const scaleTo = { name: 'scale', values: [scaleXTo, scaleYTo] };
 
-  const angleValueTo = +dataForm['angle-to'].value;
+  const angleValueTo = +d3.select('#angle-to').property('value');
   const angleTo = { name: 'rotate', values: [angleValueTo] };
 
   const transformStyleTo = getTransformStyle(translateTo, scaleTo, angleTo);
 
-  const animationType = getAnimationType(dataForm)
-  
+  const animationType = getAnimationType(dataForm);
+
   pict.attr("transform", transformStyle)
     .transition()
     .duration(6000)
@@ -105,26 +107,26 @@ export const runAnimation = (dataForm) => {
 }
 
 export const toggleAlongTheWay = () => {
-  const alongTheWay = document.getElementById('along-the-way');
+  const alongTheWay = d3.select('#along-the-way').property('checked');
 
-  const coordinatesInputs = document.getElementById('coordinates-wrapper');
-  const alongTheWayOptions = document.getElementById('along-the-way-options');
+  const coordinatesInputs = d3.select('#coordinates-wrapper');
+  const alongTheWayOptions = d3.select('#along-the-way-options');
 
-  const scaleWrapper = document.getElementById('scale-wrapper');
-  const angleWrapper = document.getElementById('angle-wrapper');
+  const scaleWrapper = d3.select('#scale-wrapper');
+  const angleWrapper = d3.select('#angle-wrapper');
 
-  if (!alongTheWay.checked) {
-    coordinatesInputs.classList.remove('display_none');
-    scaleWrapper.classList.remove('display_none');
-    angleWrapper.classList.remove('display_none');
+  if (!alongTheWay) {
+    coordinatesInputs.classed('display_none', false);
+    scaleWrapper.classed('display_none', false);
+    angleWrapper.classed('display_none', false);
 
-    alongTheWayOptions.classList.add('display_none');
+    alongTheWayOptions.classed('display_none', true);
   } else {
-    coordinatesInputs.classList.add('display_none');
-    scaleWrapper.classList.add('display_none');
-    angleWrapper.classList.add('display_none');
+    coordinatesInputs.classed('display_none', true);
+    scaleWrapper.classed('display_none', true);
+    angleWrapper.classed('display_none', true);
 
-    alongTheWayOptions.classList.remove('display_none');
+    alongTheWayOptions.classed('display_none', false);
   }
 }
 
